@@ -1,0 +1,24 @@
+{
+  "name": "ru-reactions-bot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.js",
+  "dependencies": {
+    "discord.js": "^11.5.1",
+    "google-spreadsheet": "^2.0.8"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pjithorpe/ru-reactions-bot.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pjithorpe/ru-reactions-bot/issues"
+  },
+  "homepage": "https://github.com/pjithorpe/ru-reactions-bot#readme"
+}
