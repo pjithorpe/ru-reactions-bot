@@ -93,8 +93,8 @@ function matchRoleRules(message, ruleset) {
     const roles = message.member.roles;
 
     roles.forEach(role => {
-        if (ruleset.has(role)) {
-            ruleset.get(role).forEach(rule => {
+        if (ruleset.has(role.id)) {
+            ruleset.get(role.id).forEach(rule => {
                 if (!rule.phrases.length || rule.phrases.some(phrase => message.content.toLowerCase().includes(phrase))) {
                     reactions.push(rule.reaction);
                 }
@@ -132,14 +132,8 @@ function matchRules(message, rules) {
     let reactions = [];
 
     if (rules.users.size) reactions = reactions.concat(matchUserRules(message, rules.users));
-    console.log('1');
-    console.log(reactions);
     if (rules.roles.size && message.member.roles.size) reactions = reactions.concat(matchRoleRules(message, rules.roles));
-    console.log('2');
-    console.log(reactions);
     if (rules.phrases.size) reactions = reactions.concat(matchPhraseRules(message, rules.phrases));
-    console.log('3');
-    console.log(reactions);
 
     return reactions;
 }
@@ -149,7 +143,7 @@ function handleMessage(message) {
 
     try {
         const reactions = matchRules(message, client.rules)
-        if(reactions.length) reactions.forEach(reaction => {console.log(reaction);message.react(reaction);});
+        if(reactions.length) reactions.forEach(reaction => message.react(reaction));
     }
     catch (e) {
         console.error(e);
