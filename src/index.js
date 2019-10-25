@@ -141,6 +141,18 @@ function matchRules(message, rules) {
 function handleMessage(message) {
     if (message.author.bot) return;
 
+    if (message.content === "!refresh-rules") {
+        client.rules = {};
+        client.rules.users = new Discord.Collection();
+        client.rules.roles = new Discord.Collection();
+        client.rules.phrases = new Discord.Collection();
+
+        return fetchRules()
+            .then(() => {
+                return message.reply("Reaction rules updated.");
+            });
+    }
+
     try {
         const reactions = matchRules(message, client.rules)
         if(reactions.length) reactions.forEach(reaction => message.react(reaction));
