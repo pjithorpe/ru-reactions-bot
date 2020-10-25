@@ -155,7 +155,7 @@ function handleMessage(message) {
 
     try {
         const reactions = matchRules(message, client.rules)
-        if(reactions.length) reactions.forEach(reaction => message.react(reaction));
+        if (reactions.length) reactions.forEach(reaction => message.react(reaction));
     }
     catch (e) {
         console.error(e);
@@ -174,6 +174,19 @@ client.once('ready', () => {
 client.on('message', message => {
     handleMessage(message);
 });
+
+client.on('messageReactionAdd', (messageReaction, user) => {
+    if (messageReaction.message.author.id == user.id) {
+        const userReactions = messageReaction.message.reactions.cache.filter(reaction => reaction.users.cache.has(user.id));
+        try {
+            for (const reaction of userReactions.values()) {
+                return reaction.users.remove(user.id);
+            }
+        } catch (error) {
+            console.error(`Failed to remove reactions. ${error.message}`);
+        }
+    }
+})
 
 client.on('error', console.error);
 
